@@ -1,4 +1,4 @@
-package InputProcessers;
+package inputprocessers;
 
 public class Consts {
 	public static int NUMOFTERMINALS=5000;

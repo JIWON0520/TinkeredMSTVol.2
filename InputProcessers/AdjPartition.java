@@ -1,4 +1,4 @@
-package InputProcessers;
+package inputprocessers;
 
 public class AdjPartition {
 	private int number;

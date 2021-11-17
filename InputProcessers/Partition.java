@@ -1,4 +1,4 @@
-package InputProcessers;
+package inputprocessers;
 
 import java.util.ArrayList;
 import java.util.List;
