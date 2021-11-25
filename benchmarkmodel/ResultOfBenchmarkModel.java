@@ -13,7 +13,7 @@ public class ResultOfBenchmarkModel {
 		return time;
 	}
 
-	public double getUsingLenght() {
+	public double getUsingLength() {
 		return usingLenght;
 	}
 }
