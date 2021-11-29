@@ -2,11 +2,15 @@ package inputprocessers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import tinkeredmst.TinkeredInfo;
 
 public class Partition {
 	private int number;
 	private List<AdjPartition> adjPartitions;
 	private List<Terminal> terminalStatus;
+	private Map<Integer,TinkeredInfo> tinkeredInfo;
 	
 	public Partition(int number) {
 		this.number=number;
@@ -34,6 +38,14 @@ public class Partition {
 		return terminalStatus;
 	}
 	
+	public void addTinkeredInfo(int numOfAdjPartition, TinkeredInfo tinkeredInfo) {
+		this.tinkeredInfo.put(numOfAdjPartition,tinkeredInfo);
+	}
+	
+	public Map<Integer, TinkeredInfo> getTinkeredInfo() {
+		return tinkeredInfo;
+	}
+
 	@Override
 	public String toString() {
 		return "Partition"+number+"INFO =====================" +
