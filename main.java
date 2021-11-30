@@ -46,7 +46,7 @@ public class main {
 		CompareTwoResults compareTwoResults=new CompareTwoResults(resultOfBenchmarkModel,resultOfTinkeredMST);
 		
 		//7. 결과 출력
-		printForCheckFinal(compareTwoResults,resultOfBenchmarkModel,totalLengthOfEachPartitions,connectingLengthOfTinkeredMST,resultOfTinkeredMST);
+		//printForCheckFinal(compareTwoResults,resultOfBenchmarkModel,totalLengthOfEachPartitions,connectingLengthOfTinkeredMST,resultOfTinkeredMST);
         makeFileOutput(compareTwoResults, resultOfBenchmarkModel, totalLengthOfEachPartitions, connectingLengthOfTinkeredMST, resultOfTinkeredMST);
 
 	}
