@@ -21,7 +21,7 @@ public class Terminal {
 		return yCoor;
 	}
 
-	public int getNumofPartition() {
+	public int getNumOfPartition() {
 		return numofPartition;
 	}
 
