@@ -1,6 +1,7 @@
 package inputprocessers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ public class Partition {
 		this.number=number;
 		this.adjPartitions=new ArrayList<>();
 		this.terminalStatus=new ArrayList<>();
+		this.tinkeredInfo=new HashMap<>();
 	}
 	
 	public void setAdjPartition(AdjPartition adjPartition) {
