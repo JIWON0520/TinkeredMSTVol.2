@@ -19,7 +19,7 @@ public class MST_UsingDistArr extends MST{
 	public MST_UsingDistArr(List<Terminal> terminalStatus) {
 		this.terminalStatus=terminalStatus;
 		this.numOfComponent=terminalStatus.size();
-		makeDistance();
+		//makeDistance();
 	}
 	
 	private void makeDistance() {
