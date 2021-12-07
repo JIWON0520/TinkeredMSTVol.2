@@ -47,6 +47,10 @@ public class Partition {
 	public Map<Integer, TinkeredInfo> getTinkeredInfo() {
 		return tinkeredInfo;
 	}
+	
+	public void setTinkeredInfo(int key,TinkeredInfo tinkeredInfo) {
+		this.tinkeredInfo.put(key,tinkeredInfo);
+	}
 
 	@Override
 	public String toString() {
