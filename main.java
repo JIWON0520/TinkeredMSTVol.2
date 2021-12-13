@@ -3,6 +3,7 @@ import inputprocessers.*;
 import mst.CalculatorOfDistance;
 import mst.MST;
 import mst.MST_UsingDistArr;
+import operation.Operation;
 import results.CompareTwoResults;
 import tinkeredmst.*;
 
@@ -12,6 +13,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+
 
 public class main {
 
@@ -48,7 +51,15 @@ public class main {
 		//7. 결과 출력
 		//printForCheckFinal(compareTwoResults,resultOfBenchmarkModel,totalLengthOfEachPartitions,connectingLengthOfTinkeredMST,resultOfTinkeredMST);
         makeFileOutput(compareTwoResults, resultOfBenchmarkModel, totalLengthOfEachPartitions, connectingLengthOfTinkeredMST, resultOfTinkeredMST);
-
+        
+        System.out.println("##########중간 테스트#########");
+        System.out.println(inputProcesser.getPartitionStatus().get(8).getTinkeredInfo().entrySet());
+        System.out.println(inputProcesser.getPartitionStatus().get(8).getTerminalStatus().size());
+        Operation operation= new Operation(inputProcesser);
+        inputProcesser.setTerminalStatus(operation.doOperation());
+        System.out.println(inputProcesser.getPartitionStatus().get(8).getTinkeredInfo().entrySet());
+        System.out.println(inputProcesser.getPartitionStatus().get(8).getTerminalStatus().size());
+        
 	}
 
 	private static void makeFileOutput(CompareTwoResults compareTwoResults,ResultOfBenchmarkModel resultOfBenchmarkModel, double totalLengthOfEachPartitions,double connectingLengthOfTinkeredMST, ResultOfTinkeredMST resultOfTinkeredMST) {
