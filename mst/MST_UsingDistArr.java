@@ -41,6 +41,7 @@ public class MST_UsingDistArr extends MST{
 		double result=0;
 		boolean[] selected= new boolean[numOfComponent];
 		double[] minDist=new double[numOfComponent];
+		int[] startPoint=new int[numOfComponent];
 		Arrays.fill(selected, false);
 		Arrays.fill(minDist, Double.MAX_VALUE);
 		
@@ -57,8 +58,10 @@ public class MST_UsingDistArr extends MST{
 				if(terminalStatus != null)
 					distance=calculatorOfDistance.calculateDistance(terminalStatus.get(selectedIndex), terminalStatus.get(i));
 				else distance=this.distance[selectedIndex][i];
-				if(minDist[i]>distance && distance != 0.0)
+				if(minDist[i]>distance && distance != 0.0) {
 					minDist[i]=distance;
+					startPoint[i]=selectedIndex;
+				}
 			}
 			
 			//2) 최소 거리 찾기
@@ -73,7 +76,10 @@ public class MST_UsingDistArr extends MST{
 			//3)최소 거리인 Terminal을 포함하고 거리 값, 선택여부 업데이트
 			result+=min;
 			selected[selectedIndex]=true;
+			terminalStatus.get(startPoint[selectedIndex]).setAdjTerminal(terminalStatus.get(selectedIndex));
+			terminalStatus.get(selectedIndex).setAdjTerminal(terminalStatus.get(startPoint[selectedIndex]));
 		}
+		
 		
 		return result;
 	}
