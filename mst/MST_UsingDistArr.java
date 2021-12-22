@@ -76,12 +76,17 @@ public class MST_UsingDistArr extends MST{
 			//3)최소 거리인 Terminal을 포함하고 거리 값, 선택여부 업데이트
 			result+=min;
 			selected[selectedIndex]=true;
-			terminalStatus.get(startPoint[selectedIndex]).setAdjTerminal(terminalStatus.get(selectedIndex));
-			terminalStatus.get(selectedIndex).setAdjTerminal(terminalStatus.get(startPoint[selectedIndex]));
+			if(terminalStatus!=null) {
+				terminalStatus.get(startPoint[selectedIndex]).setAdjTerminal(terminalStatus.get(selectedIndex));
+				terminalStatus.get(selectedIndex).setAdjTerminal(terminalStatus.get(startPoint[selectedIndex]));
+			}
 		}
 		
-		
 		return result;
+	}
+	
+	public List<Terminal> getTerminalStatus(){
+		return this.terminalStatus;
 	}
 
 }
