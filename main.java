@@ -19,7 +19,6 @@ import java.util.Scanner;
 public class main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		//1. INSTANCE ¹Þ±â
 		InputProcesser inputProcesser = makeInstance();
@@ -184,11 +183,12 @@ public class main {
 	}
 
 	private static ResultsOfEachPartitions makeResultsOfEachPartitions(List<Partition> partitionStatus) {
-		MST mst;
+		MST_UsingDistArr mst;
 		ResultsOfEachPartitions resultsOfEachPartition = new ResultsOfEachPartitions();
 		for(Partition p: partitionStatus) {
 			mst=new MST_UsingDistArr(p.getTerminalStatus());
 			ResultOfPartition resultOfPartition=new ResultOfPartition(p,mst.getMSTResult());
+			p.setTerminalStatus(mst.getTerminalStatus());
 			resultsOfEachPartition.addResultOfEachPartition(resultOfPartition);
 		}
 		return resultsOfEachPartition;
@@ -206,5 +206,4 @@ public class main {
 		
 		return inputProcesser;
 	}
-
 }
