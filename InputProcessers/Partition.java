@@ -24,7 +24,11 @@ public class Partition {
 		this.adjPartitions.add(adjPartition);
 	}
 	
-	public void setTerminalStatus(Terminal terminal) {
+	public void setTerminalStatus(List<Terminal> terminalStatus) {
+		this.terminalStatus=terminalStatus;
+	}
+	
+	public void addTerminalStatus(Terminal terminal) {
 		terminalStatus.add(terminal);
 	}
 	
