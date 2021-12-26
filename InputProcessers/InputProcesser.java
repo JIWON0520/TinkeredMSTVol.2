@@ -49,7 +49,7 @@ public class InputProcesser {
         for(int i = Consts.NUMOFPARTITIONS; i < Consts.NUMOFPARTITIONS + Consts.NUMOFTERMINALS; i++) {
             Terminal terminal = makeTerminal(splitInstance[i], cnt);
             terminalStatus.add(terminal);
-            partitionStatus.get(terminal.getNumOfPartition()).setTerminalStatus(terminal);
+            partitionStatus.get(terminal.getNumOfPartition()).addTerminalStatus(terminal);
         }
     }
 
