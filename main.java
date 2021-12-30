@@ -52,13 +52,10 @@ public class main {
         makeFileOutput(compareTwoResults, resultOfBenchmarkModel, totalLengthOfEachPartitions, connectingLengthOfTinkeredMST, resultOfTinkeredMST);
         
         System.out.println("##########중간 테스트#########");
-        System.out.println(inputProcesser.getPartitionStatus().get(8).getTinkeredInfo().entrySet());
-        System.out.println(inputProcesser.getPartitionStatus().get(8).getTerminalStatus().size());
+        System.out.println(inputProcesser.getTerminalStatus().size());
         Operation operation= new Operation(inputProcesser);
-        inputProcesser.setTerminalStatus(operation.doOperation());
-        System.out.println(inputProcesser.getPartitionStatus().get(8).getTinkeredInfo().entrySet());
-        System.out.println(inputProcesser.getPartitionStatus().get(8).getTerminalStatus().size());
-        
+        operation.doOperation();
+        System.out.println(inputProcesser.getTerminalStatus().size());
 	}
 
 	private static void makeFileOutput(CompareTwoResults compareTwoResults,ResultOfBenchmarkModel resultOfBenchmarkModel, double totalLengthOfEachPartitions,double connectingLengthOfTinkeredMST, ResultOfTinkeredMST resultOfTinkeredMST) {
@@ -188,7 +185,6 @@ public class main {
 		for(Partition p: partitionStatus) {
 			mst=new MST_UsingDistArr(p.getTerminalStatus());
 			ResultOfPartition resultOfPartition=new ResultOfPartition(p,mst.getMSTResult());
-			p.setTerminalStatus(mst.getTerminalStatus());
 			resultsOfEachPartition.addResultOfEachPartition(resultOfPartition);
 		}
 		return resultsOfEachPartition;
