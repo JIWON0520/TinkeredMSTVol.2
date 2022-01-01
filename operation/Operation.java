@@ -29,7 +29,7 @@ public class Operation {
 		}
 	}
 	
-	public List<Terminal> doOperation() {
+	public void doOperation() {
 		List<Terminal> terminalStatus=inputProcesser.getTerminalStatus();
 		List<Partition> partitionStatus=inputProcesser.getPartitionStatus();
 		
@@ -46,18 +46,32 @@ public class Operation {
 				int numOfPartition=Integer.parseInt(splitInstance[3]);
 				Terminal insertTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
 				Insert insert=new Insert(insertTerminal,inputProcesser);
-				inputProcesser=insert.doInsert();
+				insert.doInsert();
 			}
 			else if (operationType.equals(OperationType.DELETE)){
 				double xCoor=Double.parseDouble(splitInstance[1]);
 				double yCoor=Double.parseDouble(splitInstance[2]);
 				int numOfPartition=Integer.parseInt(splitInstance[3]);
-				Terminal insertTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
+				Terminal deleteTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
+				Delete delete=new Delete(deleteTerminal,inputProcesser);
+				delete.doDelete();
 			}
 			else {
+				double xCoor=Double.parseDouble(splitInstance[1]);
+				double yCoor=Double.parseDouble(splitInstance[2]);
+				int numOfPartition=Integer.parseInt(splitInstance[3]);
+				Terminal deleteTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
+				Delete delete=new Delete(deleteTerminal,inputProcesser);
+				delete.doDelete();
+				
+				xCoor=Double.parseDouble(splitInstance[4]);
+				yCoor=Double.parseDouble(splitInstance[5]);
+				numOfPartition=Integer.parseInt(splitInstance[6]);
+				Terminal insertTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
+				Insert insert=new Insert(insertTerminal,inputProcesser);
+				insert.doInsert();
 	
 			}
 		}
-		return terminalStatus;
 	}
 }
