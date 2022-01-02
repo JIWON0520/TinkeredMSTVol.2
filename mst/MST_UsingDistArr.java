@@ -85,8 +85,4 @@ public class MST_UsingDistArr extends MST{
 		return result;
 	}
 	
-	public List<Terminal> getTerminalStatus(){
-		return this.terminalStatus;
-	}
-
 }
