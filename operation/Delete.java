@@ -28,7 +28,8 @@ public class Delete {
 		this.tinkeredInfos=partitionStatus.get(deleteTerminal.getNumOfPartition()).getTinkeredInfo();
 	}
 	
-	public void doDelete() {
+	public double doDelete() {
+		double usingLength=0;
 		CalculatorOfDistance calculatorOfDistance = new CalculatorOfDistance();
 		for(Map.Entry<Integer, TinkeredInfo> elem : tinkeredInfos.entrySet()) {
 			int numOfAdjPartition=elem.getKey();
@@ -47,20 +48,19 @@ public class Delete {
 						newTinkeredIndex=i;
 						}
 					}
-				
+				 usingLength=minDist;
 				//Tinkered Terminal 정보 업데이트
 				tinkeredInfo.setTinkeredTerminal(terminalStastus.get(newTinkeredIndex));
 			}
 			
 			//Delete Terminal과 연결되어있던 Terminal들끼리 MST구축
-			int terminalIndex=terminalStastus.indexOf(deleteTerminal);
-			MST mst=new MST_UsingDistArr(terminalStastus.get(terminalIndex).getAdjTerminal());
+			int deleteTerminalIndex=terminalStastus.indexOf(deleteTerminal);
+			MST mst=new MST_UsingDistArr(terminalStastus.get(deleteTerminalIndex).getAdjTerminal());
 			double[] result=mst.getMSTResult();
+			usingLength+=result[1];
 			
 			//Delete Terminal과 연결되있던 Terminal들의 adjTerminalInfo 업데이트
-			int index=terminalStastus.indexOf(deleteTerminal);
-			
-			for(Terminal t: terminalStastus.get(index).getAdjTerminal()) {
+			for(Terminal t: terminalStastus.get(deleteTerminalIndex).getAdjTerminal()) {
 				t.getAdjTerminal().remove(deleteTerminal);
 			}
 		}
@@ -70,5 +70,6 @@ public class Delete {
 		inputProcesser.getTerminalStatus().remove(deleteTerminal);
 		Consts.NUMOFTERMINALS--;
 		
+		return usingLength;
 	}
 }

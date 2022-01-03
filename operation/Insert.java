@@ -24,7 +24,8 @@ public class Insert {
 		this.tinkeredInfos=partitionStatus.get(insertTerminal.getNumOfPartition()).getTinkeredInfo();
 	}
 	
-	public void doInsert() {
+	public double doInsert() {
+		double usingLength=0;
 		CalculatorOfDistance calculatorOfDistance = new CalculatorOfDistance();
 		for(Map.Entry<Integer, TinkeredInfo>elem : tinkeredInfos.entrySet()) {
 			int numOfAdjPartition=elem.getKey();
@@ -32,27 +33,30 @@ public class Insert {
 			this.tinkeredTerminal=tinkeredInfo.getTinkeredTerminal();
 			this.portal=tinkeredInfo.getPortal();
 			
-			double DistOfTinkeredTermianlToPortal=calculatorOfDistance.calculateDistance(tinkeredTerminal,portal);
-			double DistOfInsertTerminalToPortal=calculatorOfDistance.calculateDistance(insertTerminal,portal);
+			double distOfTinkeredTermianlToPortal=calculatorOfDistance.calculateDistance(tinkeredTerminal,portal);
+			double distOfInsertTerminalToPortal=calculatorOfDistance.calculateDistance(insertTerminal,portal);
 			
 			// Tinkered Terminal과 Portal사이의 거리가 Insert Terminal과 Portal사이의 거리보다 가까운 경우
-			if(DistOfInsertTerminalToPortal>DistOfTinkeredTermianlToPortal) {
+			if(distOfInsertTerminalToPortal>distOfTinkeredTermianlToPortal) {
 				double min_value=Double.MAX_VALUE;
+				int index=0;
 				for(Terminal terminal:partitionStatus.get(insertTerminal.getNumOfPartition()).getTerminalStatus()) {
 					double distance = calculatorOfDistance.calculateDistance(terminal, insertTerminal);
 					if(min_value>distance) {
 						min_value=distance;
+						index=terminalStastus.indexOf(terminal);
 					}
-					terminal.setAdjTerminal(insertTerminal);
-					insertTerminal.setAdjTerminal(terminal);
 				}
+				usingLength=min_value;
+				terminalStastus.get(index).setAdjTerminal(insertTerminal);
+				insertTerminal.setAdjTerminal(terminalStastus.get(index));
 			}
 			else {
-				tinkeredInfo.setTinkeredTerminal(insertTerminal);
-				partitionStatus.get(insertTerminal.getNumOfPartition()).setTinkeredInfo(numOfAdjPartition, tinkeredInfo);
-				
+				tinkeredInfo.setTinkeredTerminal(insertTerminal);				
 				tinkeredTerminal.setAdjTerminal(insertTerminal);
 				insertTerminal.setAdjTerminal(tinkeredTerminal);
+				
+				usingLength=calculatorOfDistance.calculateDistance(insertTerminal, tinkeredTerminal)+distOfInsertTerminalToPortal;
 			}
 		}
 		
@@ -60,6 +64,7 @@ public class Insert {
 		terminalStastus.add(insertTerminal);
 		Consts.NUMOFTERMINALS++;
 		
+		return usingLength;
 	}
 
 
