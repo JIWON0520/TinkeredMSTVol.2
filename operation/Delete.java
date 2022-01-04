@@ -38,12 +38,13 @@ public class Delete {
 			this.portal=tinkeredInfo.getPortal();
 			
 			// Delete Terminal이 Tinkered Terminal인 경우
+			int deleteTerminalIndex=terminalStastus.indexOf(deleteTerminal);
 			int newTinkeredIndex = 0;
 			if(deleteTerminal.equals(tinkeredTerminal)) {
 				double minDist=Double.MAX_VALUE;
 				for(int i=0;i<terminalStastus.size();i++){
 					double dist=calculatorOfDistance.calculateDistance(terminalStastus.get(i), portal);
-					if(minDist>dist) {
+					if(minDist>dist && deleteTerminalIndex!=i) {
 						minDist=dist;
 						newTinkeredIndex=i;
 						}
@@ -54,7 +55,6 @@ public class Delete {
 			}
 			
 			//Delete Terminal과 연결되어있던 Terminal들끼리 MST구축
-			int deleteTerminalIndex=terminalStastus.indexOf(deleteTerminal);
 			MST mst=new MST_UsingDistArr(terminalStastus.get(deleteTerminalIndex).getAdjTerminal());
 			double[] result=mst.getMSTResult();
 			usingLength+=result[1];
