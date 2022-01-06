@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class InputProcesser {
+public class InputProcesser implements Cloneable{
     private String instance;
     private List<Terminal> terminalStatus;
     private List<Partition> partitionStatus;
@@ -104,4 +104,17 @@ public class InputProcesser {
     public List<Partition> getPartitionStatus() {
         return partitionStatus;
     }
+
+	@Override
+	public InputProcesser clone() throws CloneNotSupportedException {
+		InputProcesser obj=(InputProcesser)super.clone();
+		ArrayList<Terminal> terminalStatus_Clone=new ArrayList<>();
+		for(Terminal t:terminalStatus) {
+			terminalStatus_Clone.add((Terminal) (t.clone()));
+		}
+		obj.setTerminalStatus(terminalStatus_Clone);
+		return obj;
+	}
+    
+    
 }
