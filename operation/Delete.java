@@ -55,6 +55,9 @@ public class Delete {
 			}
 			
 			//Delete Terminal과 연결되어있던 Terminal들끼리 MST구축
+			for(Terminal t:terminalStastus.get(deleteTerminalIndex).getAdjTerminal()) {
+				t.getAdjTerminal().removeAll(terminalStastus.get(deleteTerminalIndex).getAdjTerminal());
+			}
 			MST mst=new MST_UsingDistArr(terminalStastus.get(deleteTerminalIndex).getAdjTerminal());
 			double[] result=mst.getMSTResult();
 			usingLength+=result[1];
