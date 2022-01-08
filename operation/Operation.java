@@ -11,8 +11,8 @@ import inputprocessers.*;
 enum OperationType { INSERT,DELETE,MOVE}
 
 public class Operation {
-	private String instance;
-	private InputProcesser inputProcesser ;
+	protected String instance;
+	protected InputProcesser inputProcesser ;
 	
 	public Operation(InputProcesser inputProcesser) {
 		this.inputProcesser=inputProcesser;
@@ -29,8 +29,12 @@ public class Operation {
 		}
 	}
 	
-	public void doOperation() {
-		List<Terminal> terminalStatus=inputProcesser.getTerminalStatus();
+	public double[] doOperation() {
+		double usingLength=0;
+		
+		//알고리즘 시간 축정 시작
+		long start=System.currentTimeMillis();
+		
 		List<Partition> partitionStatus=inputProcesser.getPartitionStatus();
 		
  		String[] fullInstance=instance.split(System.getProperty("line.separator"));
@@ -46,7 +50,7 @@ public class Operation {
 				int numOfPartition=Integer.parseInt(splitInstance[3]);
 				Terminal insertTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
 				Insert insert=new Insert(insertTerminal,inputProcesser);
-				insert.doInsert();
+				usingLength+=insert.doInsert();
 			}
 			else if (operationType.equals(OperationType.DELETE)){
 				double xCoor=Double.parseDouble(splitInstance[1]);
@@ -54,7 +58,7 @@ public class Operation {
 				int numOfPartition=Integer.parseInt(splitInstance[3]);
 				Terminal deleteTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
 				Delete delete=new Delete(deleteTerminal,inputProcesser);
-				delete.doDelete();
+				usingLength+=delete.doDelete();
 			}
 			else {
 				double xCoor=Double.parseDouble(splitInstance[1]);
@@ -62,16 +66,18 @@ public class Operation {
 				int numOfPartition=Integer.parseInt(splitInstance[3]);
 				Terminal deleteTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
 				Delete delete=new Delete(deleteTerminal,inputProcesser);
-				delete.doDelete();
+				usingLength+=delete.doDelete();
 				
 				xCoor=Double.parseDouble(splitInstance[4]);
 				yCoor=Double.parseDouble(splitInstance[5]);
 				numOfPartition=Integer.parseInt(splitInstance[6]);
 				Terminal insertTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
 				Insert insert=new Insert(insertTerminal,inputProcesser);
-				insert.doInsert();
-	
+				usingLength+=insert.doInsert();
 			}
 		}
+		long end=System.currentTimeMillis();
+		
+		return new double[] {(end-start)/1000.0,usingLength};
 	}
 }
