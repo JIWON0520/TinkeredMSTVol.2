@@ -3,7 +3,7 @@ package inputprocessers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Terminal {
+public class Terminal implements Cloneable{
 	private double xCoor;
 	private double yCoor;
 	private int numofPartition;
@@ -36,6 +36,10 @@ public class Terminal {
 	
 	public void setAdjTerminal(Terminal terminal) {
 		this.adjTerminal.add(terminal);
+	}
+	
+	public List<Terminal> getAdjTerminal(){
+		return this.adjTerminal;
 	}
 	
 	@Override
@@ -72,5 +76,10 @@ public class Terminal {
 		return true;
 	}
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
 	
 }
