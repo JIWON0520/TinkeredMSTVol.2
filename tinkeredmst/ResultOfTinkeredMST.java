@@ -5,9 +5,9 @@ public class ResultOfTinkeredMST {
 	private double time;
 	private double usingLength;
 	
-	public ResultOfTinkeredMST(double time,double usingLength) {
-		this.time=time;
-		this.usingLength=usingLength;
+	public ResultOfTinkeredMST(double[] results) {
+		this.time=results[0];
+		this.usingLength=results[1];
 	}
 
 	public double getTime() {
