@@ -10,6 +10,8 @@ enum DividedState { HORIZONTAL,VERTICAL }
 
 public class CalculateForDistanceTwoPartitions extends CalculatorOfDistance {
     private Partition partition;
+    private List<Terminal> terminalStatus;
+    private List<Terminal> adjTerminalStatus;
     private Partition adjPartition;
     private AdjPartition adjInfo;
     private Point dividedPointOne;
@@ -20,7 +22,9 @@ public class CalculateForDistanceTwoPartitions extends CalculatorOfDistance {
 
     public CalculateForDistanceTwoPartitions(Partition partition, Partition adjPartition, AdjPartition partitionTwo) {
         this.partition = partition;
+        this.terminalStatus=partition.getTerminalStatus();
         this.adjPartition = adjPartition;
+        this.adjTerminalStatus=adjPartition.getTerminalStatus();
         this.adjInfo = partitionTwo;
         this.dividedPointOne = adjInfo.getDividedPoint1();
         this.dividedPointTwo = adjInfo.getDividedPoint2();
@@ -45,10 +49,12 @@ public class CalculateForDistanceTwoPartitions extends CalculatorOfDistance {
     public double getDistance() {
         List<Point> portals = makePortals();
 
-
         List<Double> distanceForUsingEachPortals = new ArrayList<>();
+        List<Integer> indexOfterminal = new ArrayList<>();
+        List<Integer> indexOfAdjterminal = new ArrayList<>();
+        
         for(Point p : portals) {
-            distanceForUsingEachPortals.add(getPortalDistance(p));
+            distanceForUsingEachPortals.add(getPortalDistance(p,indexOfterminal,indexOfAdjterminal));
         }
 
         double minValue = Double.MAX_VALUE;
@@ -58,22 +64,24 @@ public class CalculateForDistanceTwoPartitions extends CalculatorOfDistance {
             	minValue = distancePortal;
             	tinkeredInfoOfPartition.setPortal(portals.get(i));
             	tinkeredInfoOfAdjPartition.setPortal(portals.get(i));
+            	tinkeredInfoOfPartition.setTinkeredTerminal(terminalStatus.get(indexOfterminal.get(i)));
+            	tinkeredInfoOfAdjPartition.setTinkeredTerminal(adjTerminalStatus.get(indexOfAdjterminal.get(i)));
             }
         }
         
         this.partition.addTinkeredInfo(adjPartition.getNumber(), tinkeredInfoOfPartition);
         this.adjPartition.addTinkeredInfo(partition.getNumber(), tinkeredInfoOfAdjPartition);
         
-        checkPrintOne(portals);
+        //checkPrintOne(portals);
         
         return minValue;
     }
 
-    private Double getPortalDistance(Point portal) {
+    private Double getPortalDistance(Point portal,List<Integer> indexOfTerminal,List<Integer> indexOfAdjTerminal) {
         // 1. Partition에서 p와 가장 가까운 Terminal 찾기
         double distanceOfPartition = Double.MAX_VALUE;
         int indexOfPartition = 0;
-        for(int i = 0; i < partition.getTerminalStatus().size(); i++) {
+        for(int i = 0; i < terminalStatus.size(); i++) {
             double distBox = calculateDistance(partition.getTerminalStatus().get(i), portal);
             if(distanceOfPartition > distBox) {
                 distanceOfPartition = distBox;
@@ -84,7 +92,7 @@ public class CalculateForDistanceTwoPartitions extends CalculatorOfDistance {
         // 2. AdjParition에서 p와 가장 가까운 Terminal 찾기
         double distanceOfAdjPartition = Double.MAX_VALUE;
         int indexOfAdjPartition = 0;
-        for(int i = 0; i < adjPartition.getTerminalStatus().size(); i++) {
+        for(int i = 0; i < adjTerminalStatus.size(); i++) {
             double distBox = calculateDistance(adjPartition.getTerminalStatus().get(i), portal);
             if(distanceOfAdjPartition > distBox) {
                 distanceOfAdjPartition = distBox;
@@ -92,14 +100,14 @@ public class CalculateForDistanceTwoPartitions extends CalculatorOfDistance {
             }
         }
         
-        //3. TinkeredTerminal인 Termianl 저장
-        tinkeredInfoOfPartition.setTinkeredTerminal(partition.getTerminalStatus().get(indexOfPartition));
-        tinkeredInfoOfAdjPartition.setTinkeredTerminal(adjPartition.getTerminalStatus().get(indexOfAdjPartition));
+        //3. TinkeredTerminal인 Terminal index 저장
+        indexOfTerminal.add(indexOfPartition);
+        indexOfAdjTerminal.add(indexOfAdjPartition);
 
         return calculateDistance(partition.getTerminalStatus().get(indexOfPartition), adjPartition.getTerminalStatus().get(indexOfAdjPartition));
     }
 
-    private void checkPrintOne(List<Point> portals) {
+    /*private void checkPrintOne(List<Point> portals) {
         System.out.println("================== Partition " + partition.getNumber() + " & Partition " + adjInfo.getNumber() + " ==================");
         System.out.println("* Divided Point One: " + dividedPointOne);
         System.out.println("* Divided Point Two: " + dividedPointTwo);
@@ -107,7 +115,7 @@ public class CalculateForDistanceTwoPartitions extends CalculatorOfDistance {
         System.out.println("* PORTAL LIST: " + portals);
         System.out.println("* Tinkered result:"+partition.getTinkeredInfo().entrySet());
         System.out.println();
-    }
+    }*/
 
     private List<Point> makePortals() {
         List<Point> portals = new ArrayList<>();
