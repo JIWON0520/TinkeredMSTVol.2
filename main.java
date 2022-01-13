@@ -3,6 +3,7 @@ import inputprocessers.*;
 import mst.CalculatorOfDistance;
 import mst.MST;
 import mst.MST_UsingDistArr;
+import operation.BenchmarkOperation;
 import operation.Operation;
 import results.CompareTwoResults;
 import tinkeredmst.*;
@@ -14,48 +15,39 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-
-
 public class main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CloneNotSupportedException {
 		
-		//1. INSTANCE πﬁ±‚
+		//1. INSTANCE Î∞õÍ∏∞
 		InputProcesser inputProcesser = makeInstance();
 		
-		//2. Benchmark Model∏∏µÈ±‚
-		ResultOfBenchmarkModel resultOfBenchmarkModel= makeBenchmarkModel(inputProcesser.getTerminalStatus());
+		InputProcesser copy=inputProcesser.clone();
 		
-		//3. ∞¢ Partition ∫∞∑Œ Sub MST∏¶ ∏∏µÁ¥Ÿ.
+		//3. Í∞Å Partition Î≥ÑÎ°ú Sub MSTÎ•º ÎßåÎì†Îã§.
 		ResultsOfEachPartitions resultsOfEachParitions = makeResultsOfEachPartitions(inputProcesser.getPartitionStatus());
-		
-		//∫ª æÀ∞Ì∏Æ¡Ú¿ª ¿ß«— Ω√∞£ √¯¡§ Ω√¿€
-		CalculateTimeForTinkeredMST calculateTimeForTinkeredMST = makeStartTimeForTinkeredMST(); 
-		
-		//4. ∞¢ Partition ∫∞ ∞≈∏Æ∏¶ ¿˙¿Â«—¥Ÿ.
+	
+		//4. Í∞Å Partition Î≥Ñ Í±∞Î¶¨Î•º Ï†ÄÏû•ÌïúÎã§.
 		DistanceOfEachPartitions distanceOfEachPartitions= makeDistanceOfEachPartitions(inputProcesser);
 		
-		//5. Partition ªÁ¿Ã MST∏¶ ±∏√‡«—¥Ÿ.
+		//5. Partition ÏÇ¨Ïù¥ MSTÎ•º Íµ¨Ï∂ïÌïúÎã§.
 		double totalLengthOfEachPartitions=makeTotalLengthOfEachPartitions(resultsOfEachParitions);
 		double connectingLengthOfTinkeredMST=makeResultOfTinkeredMST(distanceOfEachPartitions);
-		
-		//∫ª æÀ∞Ì∏Æ¡Ú Ω√∞£ √¯¡§ ≥°
-		calculateTimeForTinkeredMST=makeEndTimeForTinkeredMST(calculateTimeForTinkeredMST);
-		
-		ResultOfTinkeredMST resultOfTinkeredMST=makeResultOfTinkeredMST(calculateTimeForTinkeredMST.getTime(),totalLengthOfEachPartitions+connectingLengthOfTinkeredMST);
 	
-		//6. Benchmark model∞˙ TinkeredMST¿«  Result∏¶ ≈Î«’∞¸∏Æ
+		ResultOfTinkeredMST resultOfTinkeredMST=makeResultOfTinkeredMST(inputProcesser);
+		
+		//2. Benchmark ModelÎßåÎì§Í∏∞
+		ResultOfBenchmarkModel resultOfBenchmarkModel= makeBenchmarkModel(copy);
+		
+		//6. Benchmark modelÍ≥º TinkeredMSTÏùò  ResultÎ•º ÌÜµÌï©Í¥ÄÎ¶¨
 		CompareTwoResults compareTwoResults=new CompareTwoResults(resultOfBenchmarkModel,resultOfTinkeredMST);
 		
-		//7. ∞·∞˙ √‚∑¬
-		//printForCheckFinal(compareTwoResults,resultOfBenchmarkModel,totalLengthOfEachPartitions,connectingLengthOfTinkeredMST,resultOfTinkeredMST);
-        makeFileOutput(compareTwoResults, resultOfBenchmarkModel, totalLengthOfEachPartitions, connectingLengthOfTinkeredMST, resultOfTinkeredMST);
+		//7. Í≤∞Í≥º Ï∂úÎ†•
+		printForCheckFinal(compareTwoResults,resultOfBenchmarkModel,totalLengthOfEachPartitions,connectingLengthOfTinkeredMST,resultOfTinkeredMST);
+	
+        //makeFileOutput(compareTwoResults, resultOfBenchmarkModel, totalLengthOfEachPartitions, connectingLengthOfTinkeredMST, resultOfTinkeredMST);
         
-        System.out.println("##########¡ﬂ∞£ ≈◊Ω∫∆Æ#########");
-        System.out.println(inputProcesser.getTerminalStatus().size());
-        Operation operation= new Operation(inputProcesser);
-        operation.doOperation();
-        System.out.println(inputProcesser.getTerminalStatus().size());
+        
 	}
 
 	private static void makeFileOutput(CompareTwoResults compareTwoResults,ResultOfBenchmarkModel resultOfBenchmarkModel, double totalLengthOfEachPartitions,double connectingLengthOfTinkeredMST, ResultOfTinkeredMST resultOfTinkeredMST) {
@@ -124,8 +116,8 @@ public class main {
         System.out.println("   - length of Benchmark model: " + resultOfBenchmarkModel.getUsingLength());
         System.out.println("   - length of Tinkered MST: " + resultOfTinkeredMST.getUsingLength());
         System.out.println("* TIME OF TWO ALGORITHMS...");
-        System.out.println("   - length of Benchmark model: " + resultOfBenchmarkModel.getTime());
-        System.out.println("   - length of Tinkered MST: " + resultOfTinkeredMST.getTime());
+        System.out.println("   - time of Benchmark model: " + resultOfBenchmarkModel.getTime());
+        System.out.println("   - time of Tinkered MST: " + resultOfTinkeredMST.getTime());
         System.out.println("* DETAIL OF TINKERED MST...");
         System.out.println("    - total length for partitions(not connecting each partitions): " + totalLengthOfEachPartitions);
         System.out.println("    - connecting length for partitions: " + connectingLengthOfTinkeredMST);
@@ -133,15 +125,11 @@ public class main {
 	}
 
 
-	private static ResultOfTinkeredMST makeResultOfTinkeredMST(double timeOfTinkerdMST, double finalResultLengthForTinkeredMST) {
-		return new ResultOfTinkeredMST(timeOfTinkerdMST, finalResultLengthForTinkeredMST);
+	private static ResultOfTinkeredMST makeResultOfTinkeredMST(InputProcesser inputProcesser) {
+		Operation operation=new Operation(inputProcesser);
 		
-	}
-
-	private static CalculateTimeForTinkeredMST makeEndTimeForTinkeredMST(CalculateTimeForTinkeredMST calculateTimeForTinkeredMST) {
-		calculateTimeForTinkeredMST.setEndTime(System.currentTimeMillis());
+		return new ResultOfTinkeredMST(operation.doOperation());
 		
-		return calculateTimeForTinkeredMST;
 	}
 
 	private static double makeResultOfTinkeredMST(DistanceOfEachPartitions distanceOfEachPartitions) {
@@ -172,12 +160,6 @@ public class main {
 		return distanceOfEachPartitions;
 	}
 
-	private static CalculateTimeForTinkeredMST makeStartTimeForTinkeredMST() {
-		CalculateTimeForTinkeredMST calculateTimeForTinkeredMST= new CalculateTimeForTinkeredMST();
-		calculateTimeForTinkeredMST.setStartTime(System.currentTimeMillis());
-		
-		return calculateTimeForTinkeredMST;
-	}
 
 	private static ResultsOfEachPartitions makeResultsOfEachPartitions(List<Partition> partitionStatus) {
 		MST_UsingDistArr mst;
@@ -190,9 +172,15 @@ public class main {
 		return resultsOfEachPartition;
 	}
 
-	private static ResultOfBenchmarkModel makeBenchmarkModel(List<Terminal> terminalStatus) {
+	private static ResultOfBenchmarkModel makeBenchmarkModel(InputProcesser inputProcesser) {
+		List<Terminal> terminalStatus=inputProcesser.getTerminalStatus();
+		//Ï¥àÍ∏∞Ïùò MSTÍµ¨Ï∂ï
 		MST mst=new MST_UsingDistArr(terminalStatus);
-		return new ResultOfBenchmarkModel(mst.getMSTResult());
+		
+		//Operation ÏàòÌñâ
+		BenchmarkOperation BenchmarkOperation=new BenchmarkOperation(inputProcesser);
+		
+		return new ResultOfBenchmarkModel(BenchmarkOperation.doOperation());
 	}
 	
 	private static InputProcesser makeInstance() {
