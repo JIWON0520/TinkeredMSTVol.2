@@ -45,7 +45,7 @@ public class main {
 		//7. 결과 출력
 		printForCheckFinal(compareTwoResults,resultOfBenchmarkModel,totalLengthOfEachPartitions,connectingLengthOfTinkeredMST,resultOfTinkeredMST);
 	
-        //makeFileOutput(compareTwoResults, resultOfBenchmarkModel, totalLengthOfEachPartitions, connectingLengthOfTinkeredMST, resultOfTinkeredMST);
+        makeFileOutput(compareTwoResults, resultOfBenchmarkModel, totalLengthOfEachPartitions, connectingLengthOfTinkeredMST, resultOfTinkeredMST);
         
         
 	}
