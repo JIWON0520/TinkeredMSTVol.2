@@ -78,9 +78,9 @@ public class main {
 	            bs.write(s.concat("\n").getBytes());
 	            s = "* TIME OF TWO ALGORITHMS...";
 	            bs.write(s.concat("\n").getBytes());
-	            s = "   - length of Benchmark model: " + resultOfBenchmarkModel.getTime();
+	            s = "   - time of Benchmark model: " + resultOfBenchmarkModel.getTime();
 	            bs.write(s.concat("\n").getBytes());
-	            s = "   - length of Tinkered MST: " + resultOfTinkeredMST.getTime();
+	            s = "   - time of Tinkered MST: " + resultOfTinkeredMST.getTime();
 	            bs.write(s.concat("\n").getBytes());
 	            s = "* DETAIL OF TINKERED MST...";
 	            bs.write(s.concat("\n").getBytes());
