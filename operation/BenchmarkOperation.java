@@ -31,7 +31,7 @@ public class BenchmarkOperation extends Operation{
 		for(int i=1;i<=operationNum;i++) {
 			String[] splitInstance=fullInstance[i].split(" ");
 			OperationType operationType=OperationType.valueOf(splitInstance[0]);
-			
+			usingLength=0;
 			if (operationType.equals(OperationType.INSERT)){
 				double xCoor=Double.parseDouble(splitInstance[1]);
 				double yCoor=Double.parseDouble(splitInstance[2]);
@@ -39,7 +39,7 @@ public class BenchmarkOperation extends Operation{
 				Terminal insertTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
 				terminalStatus.add(insertTerminal);
 				MST mst=new MST_UsingDistArr(terminalStatus);
-				usingLength+=mst.getMSTResult()[1];
+				usingLength=mst.getMSTResult()[1];
 			}
 			else if (operationType.equals(OperationType.DELETE)){
 				double xCoor=Double.parseDouble(splitInstance[1]);
@@ -48,7 +48,7 @@ public class BenchmarkOperation extends Operation{
 				Terminal deleteTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
 				terminalStatus.remove(deleteTerminal);
 				MST mst=new MST_UsingDistArr(terminalStatus);
-				usingLength+=mst.getMSTResult()[1];
+				usingLength=mst.getMSTResult()[1];
 			}
 			else {
 				double xCoor=Double.parseDouble(splitInstance[1]);
@@ -56,15 +56,14 @@ public class BenchmarkOperation extends Operation{
 				int numOfPartition=Integer.parseInt(splitInstance[3]);
 				Terminal deleteTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
 				terminalStatus.remove(deleteTerminal);
-				MST mst=new MST_UsingDistArr(terminalStatus);
-				usingLength+=mst.getMSTResult()[1];
 				
 				xCoor=Double.parseDouble(splitInstance[4]);
 				yCoor=Double.parseDouble(splitInstance[5]);
 				numOfPartition=Integer.parseInt(splitInstance[6]);
 				Terminal insertTerminal=new Terminal(xCoor, yCoor, numOfPartition, partitionStatus.get(numOfPartition));
 				terminalStatus.add(insertTerminal);
-				usingLength+=mst.getMSTResult()[1];
+				MST mst=new MST_UsingDistArr(terminalStatus);
+				usingLength=mst.getMSTResult()[1];
 			}
 		}
 		
