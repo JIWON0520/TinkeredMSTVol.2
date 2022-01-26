@@ -44,12 +44,13 @@ public class Delete {
 				double minDist=Double.MAX_VALUE;
 				for(int i=0;i<terminalStastus.size();i++){
 					double dist=calculatorOfDistance.calculateDistance(terminalStastus.get(i), portal);
-					if(minDist>dist && deleteTerminalIndex!=i) {
+					if(minDist>dist && i!=deleteTerminalIndex) {
 						minDist=dist;
 						newTinkeredIndex=i;
 						}
 					}
-				 usingLength=minDist;
+				 usingLength-=calculatorOfDistance.calculateDistance(deleteTerminal, tinkeredInfo.getPairTerminal());
+				 usingLength+=calculatorOfDistance.calculateDistance(terminalStastus.get(newTinkeredIndex), tinkeredInfo.getPairTerminal());
 				//Tinkered Terminal 정보 업데이트
 				tinkeredInfo.setTinkeredTerminal(terminalStastus.get(newTinkeredIndex));
 			}
@@ -57,6 +58,7 @@ public class Delete {
 			//Delete Terminal과 연결되어있던 Terminal들끼리 MST구축
 			for(Terminal t:terminalStastus.get(deleteTerminalIndex).getAdjTerminal()) {
 				t.getAdjTerminal().removeAll(terminalStastus.get(deleteTerminalIndex).getAdjTerminal());
+				usingLength-=calculatorOfDistance.calculateDistance(t, deleteTerminal);
 			}
 			MST mst=new MST_UsingDistArr(terminalStastus.get(deleteTerminalIndex).getAdjTerminal());
 			double[] result=mst.getMSTResult();
