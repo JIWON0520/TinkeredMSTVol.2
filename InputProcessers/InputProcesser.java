@@ -16,7 +16,7 @@ public class InputProcesser implements Cloneable{
     public InputProcesser(String path) {
         terminalStatus = new ArrayList<>();
         partitionStatus = new ArrayList<>();
-        Consts.setFILENAME(path.split("\\\\")[path.split("\\\\").length - 1].substring(0, path.split("\\\\")[path.split("\\\\").length - 1].length() - 4));
+        Consts.setFILENAME(Consts.FILEPATH+"\\"+path.split("\\\\")[path.split("\\\\").length - 1].substring(0, path.split("\\\\")[path.split("\\\\").length - 1].length() - 4));
 
         FileInputStream fileInputStream = null;
         try {
