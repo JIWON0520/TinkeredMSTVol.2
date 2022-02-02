@@ -23,3 +23,7 @@ So a method of maintaining MST following operation without reconstructing  new M
 3. Move operation
 
 Move operation is combination of delete operation and insert operation.
+
+## UML
+
+![uml](https://user-images.githubusercontent.com/77263283/152115261-e103f803-8cab-470c-91ba-9ebb313fb879.png)
