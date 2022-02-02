@@ -10,7 +10,7 @@ In the Tinkered MST Vol.1, we proposed a method of obtaining optimized connectin
 In this paper, we consider moving Terminals in real time.
 New Terminals are able to insert.
 Also existing Terminals are able to delete or move to other Partition.
-If there are many operations, after operation are ended, getting MST of all terminal  takes considerable time.
+If there are many operations, getting MST of all terminal in evey operation takes considerable time.
 So a method of maintaining MST following operation without reconstructing  new MST is described in this paper.
 
 ## Algoritm
