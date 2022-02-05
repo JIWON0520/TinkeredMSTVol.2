@@ -6,6 +6,7 @@ import inputprocessers.Terminal;
 public class TinkeredInfo {
 	private Terminal tinkeredTerminal;
 	private Point portal;
+	private Terminal pairTerminal;
 	
 	public Terminal getTinkeredTerminal() {
 		return tinkeredTerminal;
@@ -20,12 +21,20 @@ public class TinkeredInfo {
 		this.portal = portal;
 	}
 	
+	public Terminal getPairTerminal() {
+		return pairTerminal;
+	}
+	public void setPairTerminal(Terminal pairTerminal) {
+		this.pairTerminal = pairTerminal;
+	}
 	@Override
 	public String toString() {
 		return "tinkered Terminal="
 				+ tinkeredTerminal
 				+", used Portal:"
-				+portal;
+				+portal
+				+"PairTerminal="
+				+pairTerminal;
 	}
 
 }
