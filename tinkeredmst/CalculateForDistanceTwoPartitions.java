@@ -48,10 +48,10 @@ public class CalculateForDistanceTwoPartitions extends CalculatorOfDistance {
 
     public double getDistance() {
         List<Point> portals = makePortals();
-
         List<Double> distanceForUsingEachPortals = new ArrayList<>();
         List<Integer> indexOfterminal = new ArrayList<>();
         List<Integer> indexOfAdjterminal = new ArrayList<>();
+        int index=0;
         
         for(Point p : portals) {
             distanceForUsingEachPortals.add(getPortalDistance(p,indexOfterminal,indexOfAdjterminal));
@@ -62,12 +62,15 @@ public class CalculateForDistanceTwoPartitions extends CalculatorOfDistance {
         	double distancePortal=distanceForUsingEachPortals.get(i);
             if(minValue > distancePortal) {
             	minValue = distancePortal;
-            	tinkeredInfoOfPartition.setPortal(portals.get(i));
-            	tinkeredInfoOfAdjPartition.setPortal(portals.get(i));
-            	tinkeredInfoOfPartition.setTinkeredTerminal(terminalStatus.get(indexOfterminal.get(i)));
-            	tinkeredInfoOfAdjPartition.setTinkeredTerminal(adjTerminalStatus.get(indexOfAdjterminal.get(i)));
+            	index=i;
             }
         }
+        tinkeredInfoOfPartition.setPortal(portals.get(index));
+    	tinkeredInfoOfAdjPartition.setPortal(portals.get(index));
+    	tinkeredInfoOfPartition.setTinkeredTerminal(terminalStatus.get(indexOfterminal.get(index)));
+    	tinkeredInfoOfPartition.setPairTerminal(adjTerminalStatus.get(indexOfAdjterminal.get(index)));
+    	tinkeredInfoOfAdjPartition.setTinkeredTerminal(adjTerminalStatus.get(indexOfAdjterminal.get(index)));
+    	tinkeredInfoOfAdjPartition.setPairTerminal(terminalStatus.get(indexOfterminal.get(index)));
         
         this.partition.addTinkeredInfo(adjPartition.getNumber(), tinkeredInfoOfPartition);
         this.adjPartition.addTinkeredInfo(partition.getNumber(), tinkeredInfoOfAdjPartition);
