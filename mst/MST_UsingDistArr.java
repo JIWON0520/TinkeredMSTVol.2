@@ -7,6 +7,7 @@ import java.util.List;
 import inputprocessers.Terminal;
 
 public class MST_UsingDistArr extends MST{
+	private static final double Infinity = 0;
 	private double[][] distance;
 	private int numOfComponent;
 	private List<Terminal> terminalStatus;
@@ -74,7 +75,9 @@ public class MST_UsingDistArr extends MST{
 			}
 			
 			//3)최소 거리인 Terminal을 포함하고 거리 값, 선택여부 업데이트
-			result+=min;
+			if(min!=Double.MAX_VALUE) {
+				result+=min;
+			}
 			selected[selectedIndex]=true;
 			if(terminalStatus!=null) {
 				terminalStatus.get(startPoint[selectedIndex]).setAdjTerminal(terminalStatus.get(selectedIndex));
