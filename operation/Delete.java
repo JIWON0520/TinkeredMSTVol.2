@@ -29,6 +29,7 @@ public class Delete {
 	}
 	
 	public double doDelete() {
+		int deleteTerminalIndex=terminalStastus.indexOf(deleteTerminal);
 		double usingLength=0;
 		CalculatorOfDistance calculatorOfDistance = new CalculatorOfDistance();
 		for(Map.Entry<Integer, TinkeredInfo> elem : tinkeredInfos.entrySet()) {
@@ -38,7 +39,6 @@ public class Delete {
 			this.portal=tinkeredInfo.getPortal();
 			
 			// Delete Terminal이 Tinkered Terminal인 경우
-			int deleteTerminalIndex=terminalStastus.indexOf(deleteTerminal);
 			int newTinkeredIndex = 0;
 			if(deleteTerminal.equals(tinkeredTerminal)) {
 				double minDist=Double.MAX_VALUE;
@@ -55,19 +55,19 @@ public class Delete {
 				tinkeredInfo.setTinkeredTerminal(terminalStastus.get(newTinkeredIndex));
 			}
 			
-			//Delete Terminal과 연결되어있던 Terminal들끼리 MST구축
-			for(Terminal t:terminalStastus.get(deleteTerminalIndex).getAdjTerminal()) {
-				t.getAdjTerminal().removeAll(terminalStastus.get(deleteTerminalIndex).getAdjTerminal());
-				usingLength-=calculatorOfDistance.calculateDistance(t, deleteTerminal);
-			}
-			MST mst=new MST_UsingDistArr(terminalStastus.get(deleteTerminalIndex).getAdjTerminal());
-			double[] result=mst.getMSTResult();
-			usingLength+=result[1];
-			
-			//Delete Terminal과 연결되있던 Terminal들의 adjTerminalInfo 업데이트
-			for(Terminal t: terminalStastus.get(deleteTerminalIndex).getAdjTerminal()) {
-				t.getAdjTerminal().remove(deleteTerminal);
-			}
+		}
+		//Delete Terminal과 연결되어있던 Terminal들끼리 MST구축
+		for(Terminal t:terminalStastus.get(deleteTerminalIndex).getAdjTerminal()) {
+			t.getAdjTerminal().removeAll(terminalStastus.get(deleteTerminalIndex).getAdjTerminal());
+			usingLength-=calculatorOfDistance.calculateDistance(t, deleteTerminal);
+		}
+		MST mst=new MST_UsingDistArr(terminalStastus.get(deleteTerminalIndex).getAdjTerminal());
+		double[] result=mst.getMSTResult();
+		usingLength+=result[1];
+		
+		//Delete Terminal과 연결되있던 Terminal들의 adjTerminalInfo 업데이트
+		for(Terminal t: terminalStastus.get(deleteTerminalIndex).getAdjTerminal()) {
+			t.getAdjTerminal().remove(deleteTerminal);
 		}
 		
 		//Terminal목록에서 Delete Terminal 삭제
