@@ -9,6 +9,7 @@ import results.CompareTwoResults;
 import tinkeredmst.*;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -18,9 +19,14 @@ import java.util.Scanner;
 public class main {
 
 	public static void main(String[] args) throws CloneNotSupportedException {
+		File[] FileList=makeFileList();
 		
+		for(int i=0;i<FileList.length ;i++) {
+			
+			String path=FileList[i].toString();
+			
 		//1. INSTANCE 받기
-		InputProcesser inputProcesser = makeInstance();
+		InputProcesser inputProcesser = makeInstance(path);
 		
 		InputProcesser copy=inputProcesser.clone();
 		
@@ -34,7 +40,7 @@ public class main {
 		double totalLengthOfEachPartitions=makeTotalLengthOfEachPartitions(resultsOfEachParitions);
 		double connectingLengthOfTinkeredMST=makeResultOfTinkeredMST(distanceOfEachPartitions);
 	
-		ResultOfTinkeredMST resultOfTinkeredMST=makeResultOfTinkeredMST(inputProcesser);
+		ResultOfTinkeredMST resultOfTinkeredMST=makeResultOfTinkeredMST(inputProcesser,totalLengthOfEachPartitions+connectingLengthOfTinkeredMST);
 		
 		//2. Benchmark Model만들기
 		ResultOfBenchmarkModel resultOfBenchmarkModel= makeBenchmarkModel(copy);
@@ -47,7 +53,7 @@ public class main {
 	
         makeFileOutput(compareTwoResults, resultOfBenchmarkModel, totalLengthOfEachPartitions, connectingLengthOfTinkeredMST, resultOfTinkeredMST);
         
-        
+		}
 	}
 
 	private static void makeFileOutput(CompareTwoResults compareTwoResults,ResultOfBenchmarkModel resultOfBenchmarkModel, double totalLengthOfEachPartitions,double connectingLengthOfTinkeredMST, ResultOfTinkeredMST resultOfTinkeredMST) {
@@ -125,10 +131,11 @@ public class main {
 	}
 
 
-	private static ResultOfTinkeredMST makeResultOfTinkeredMST(InputProcesser inputProcesser) {
+	private static ResultOfTinkeredMST makeResultOfTinkeredMST(InputProcesser inputProcesser,double totalLengthOfTinkeredMST) {
 		Operation operation=new Operation(inputProcesser);
-		
-		return new ResultOfTinkeredMST(operation.doOperation());
+		double[] result=operation.doOperation();
+		result[1]+=totalLengthOfTinkeredMST;
+		return new ResultOfTinkeredMST(result);
 		
 	}
 
@@ -183,11 +190,19 @@ public class main {
 		return new ResultOfBenchmarkModel(BenchmarkOperation.doOperation());
 	}
 	
-	private static InputProcesser makeInstance() {
-		Scanner input=new Scanner(System.in);
-		String path=input.nextLine();
+	private static InputProcesser makeInstance(String path) {
+		//Scanner input=new Scanner(System.in);
+		//String path=input.nextLine();
 		InputProcesser inputProcesser=new InputProcesser(path);
 		
 		return inputProcesser;
+	}
+	private static File[] makeFileList() {
+		Scanner input=new Scanner(System.in);
+		String path=input.nextLine();
+		File file=new File(path);
+		File fileList[]=file.listFiles();
+		Consts.setFILEPATH(path.toString());
+		return fileList;
 	}
 }
