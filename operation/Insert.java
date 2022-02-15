@@ -58,7 +58,7 @@ public class Insert {
 				
 				//원래 TinkeredTerminal과 adjPartition의 pairTerminal과의 거리를 빼고, TinkeredTerminal로 새로 업데이트된 insertTerminal과 adjPartition의 pairTerminal과의  거리를 더해줌
 				usingLength-=calculatorOfDistance.calculateDistance(tinkeredTerminal, tinkeredInfo.getPairTerminal());
-				usingLength=calculatorOfDistance.calculateDistance(insertTerminal, tinkeredTerminal)+calculatorOfDistance.calculateDistance(insertTerminal,tinkeredInfo.getPairTerminal());
+				usingLength+=calculatorOfDistance.calculateDistance(insertTerminal, tinkeredTerminal)+calculatorOfDistance.calculateDistance(insertTerminal,tinkeredInfo.getPairTerminal());
 			}
 		}
 		
