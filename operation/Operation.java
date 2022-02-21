@@ -16,7 +16,7 @@ public class Operation {
 	
 	public Operation(InputProcesser inputProcesser) {
 		this.inputProcesser=inputProcesser;
-		String path=Consts.FILENAME+"_Operation.txt";
+		String path=Consts.FILENAME.replace("TestCase","Operation")+"_Operation.txt";
 		
 		FileInputStream fileInputStream=null;
 		try {
