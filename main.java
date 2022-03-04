@@ -30,19 +30,19 @@ public class main {
 		
 		InputProcesser copy=inputProcesser.clone();
 		
-		//3. 각 Partition 별로 Sub MST를 만든다.
+		//2. 각 Partition 별로 Sub MST를 만든다.
 		ResultsOfEachPartitions resultsOfEachParitions = makeResultsOfEachPartitions(inputProcesser.getPartitionStatus());
 	
-		//4. 각 Partition 별 거리를 저장한다.
+		//3. 각 Partition 별 거리를 저장한다.
 		DistanceOfEachPartitions distanceOfEachPartitions= makeDistanceOfEachPartitions(inputProcesser);
 		
-		//5. Partition 사이 MST를 구축한다.
+		//4. Partition 사이 MST를 구축한다.
 		double totalLengthOfEachPartitions=makeTotalLengthOfEachPartitions(resultsOfEachParitions);
 		double connectingLengthOfTinkeredMST=makeResultOfTinkeredMST(distanceOfEachPartitions);
 	
 		ResultOfTinkeredMST resultOfTinkeredMST=makeResultOfTinkeredMST(inputProcesser,totalLengthOfEachPartitions+connectingLengthOfTinkeredMST);
 		
-		//2. Benchmark Model만들기
+		//5. Benchmark Model만들기
 		ResultOfBenchmarkModel resultOfBenchmarkModel= makeBenchmarkModel(copy);
 		
 		//6. Benchmark model과 TinkeredMST의  Result를 통합관리
